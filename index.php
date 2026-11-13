@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة الجداول - متوسطة مبرك العربي</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --info: #06b6d4;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .navbar-custom {
+            background: var(--gradient);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            padding: 15px 30px;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand i {
+            font-size: 32px;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .welcome-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .welcome-section h1 {
+            color: var(--dark);
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            color: var(--secondary);
+            font-size: 18px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card-custom {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-custom:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 32px;
+            color: white;
+        }
+
+        .card-icon.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-icon.success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .card-icon.warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .card-icon.danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .card-icon.info {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+        }
+
+        .card-icon.purple {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+
+        .card-title {
+            color: var(--dark);
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            color: var(--secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .stats-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .stats-section h3 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--secondary);
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--secondary);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar-brand {
+                font-size: 18px;
+            }
+
+            .welcome-section h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Navbar -->
+        <nav class="navbar-custom">
+            <div class="navbar-brand">
+                <i class="fas fa-school"></i>
+                <span>متوسطة مبرك العربي 500 سكن المحمدية</span>
+            </div>
+        </nav>
+
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>نظام إدارة الجداول الدراسية</h1>
+            <p>إدارة شاملة لجداول الحصص والأساتذة والتلاميذ</p>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="cards-grid">
+            <a href="/dach/prof.php" target="_blank" class="card-custom">
+                <div class="card-icon primary">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <div class="card-title">إدارة الأساتذة</div>
+                <div class="card-description">إضافة، تعديل، وحذف بيانات الأساتذة وجداول حصصهم</div>
+            </a>
+
+            <a href="/dach/jelda_a3.php" target="_blank" class="card-custom">
+                <div class="card-icon success">
+                    <i class="fas fa-print"></i>
+                </div>
+                <div class="card-title">طباعة الجلدات</div>
+                <div class="card-description">طباعة جلدات الأساتذة والتلاميذ بحجم A3</div>
+            </a>
+
+            <a href="/dach/p-prof.php" target="_blank" class="card-custom">
+                <div class="card-icon warning">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="card-title">طباعة جدول الأستاذ</div>
+                <div class="card-description">طباعة جدول الحصص الخاص بكل أستاذ</div>
+            </a>
+
+            <a href="/dach/p-eleve.php" target="_blank" class="card-custom">
+                <div class="card-icon info">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="card-title">طباعة جدول القسم</div>
+                <div class="card-description">طباعة جدول الحصص لكل قسم من الأقسام</div>
+            </a>
+
+            <a href="/dach/reception.php" target="_blank" class="card-custom">
+                <div class="card-icon purple">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="card-title">أيام الاستقبال</div>
+                <div class="card-description">طباعة جدول أيام استقبال الأساتذة لكل قسم</div>
+            </a>
+
+            <a href="/dach/bb.php" target="_blank" class="card-custom">
+                <div class="card-icon danger">
+                    <i class="fas fa-table"></i>
+                </div>
+                <div class="card-title">عرض الجداول اليومية</div>
+                <div class="card-description">عرض جداول الحصص لكل يوم مع القاعات الشاغرة</div>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p> 2025 متوسطة مبرك العربي 500 سكن المحمدية - جميع الحقوق محفوظة</p>
+        </footer>
+    </div>
+</body>
+</html>
